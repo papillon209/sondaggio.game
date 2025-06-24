@@ -1,0 +1,108 @@
+{
+  "title": "Reverse Poll",
+  "start": "Start",
+  "yourName": "Your name",
+  "matchCode": "Match code (e.g. 23XZ)",
+  "correct": "Correct!",
+  "wrong": "Right answer:",
+  "youScored": "You scored",
+  "share": "Share",
+  "badge": {
+    "beginner": "🎓 Beginner - Misunderstood",
+    "explorer": "🧭 Explorer - Intuitive",
+    "pop": "🔥 Popular - Pop Star",
+    "master": "👑 Mastermind - Voice of the People"
+  },
+  "questions": [
+    {
+      "text": "Most hated food?",
+      "options": [
+        "Pineapple",
+        "Liver",
+        "Licorice"
+      ],
+      "correct": "Pineapple"
+    },
+    {
+      "text": "Worst day of the week?",
+      "options": [
+        "Monday",
+        "Tuesday",
+        "Sunday"
+      ],
+      "correct": "Monday"
+    },
+    {
+      "text": "Most annoying social?",
+      "options": [
+        "Facebook",
+        "TikTok",
+        "LinkedIn"
+      ],
+      "correct": "LinkedIn"
+    },
+    {
+      "text": "Worst season?",
+      "options": [
+        "Summer",
+        "Winter",
+        "Spring"
+      ],
+      "correct": "Winter"
+    },
+    {
+      "text": "Most boring music genre?",
+      "options": [
+        "Trap",
+        "Jazz",
+        "Classical"
+      ],
+      "correct": "Trap"
+    },
+    {
+      "text": "Worst way to wake up?",
+      "options": [
+        "Alarm",
+        "Late",
+        "Noise burst"
+      ],
+      "correct": "Late"
+    },
+    {
+      "text": "Worst thing to forget?",
+      "options": [
+        "Keys",
+        "Phone",
+        "Wallet"
+      ],
+      "correct": "Phone"
+    },
+    {
+      "text": "Least liked color?",
+      "options": [
+        "Yellow",
+        "Brown",
+        "Pink"
+      ],
+      "correct": "Brown"
+    },
+    {
+      "text": "Most boring sport?",
+      "options": [
+        "Golf",
+        "Curling",
+        "Bowling"
+      ],
+      "correct": "Golf"
+    },
+    {
+      "text": "Least exciting meal?",
+      "options": [
+        "Breakfast",
+        "Lunch",
+        "Dinner"
+      ],
+      "correct": "Breakfast"
+    }
+  ]
+}

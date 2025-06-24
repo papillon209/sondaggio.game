@@ -1,0 +1,108 @@
+{
+  "title": "Sondaggio al Contrario",
+  "start": "Inizia",
+  "yourName": "Il tuo nome",
+  "matchCode": "Codice partita (es. 23XZ)",
+  "correct": "Giusto!",
+  "wrong": "Corretto:",
+  "youScored": "Hai totalizzato",
+  "share": "Condividi",
+  "badge": {
+    "beginner": "🎓 Principiante - Incompreso",
+    "explorer": "🧭 Esploratore - Intuitivo",
+    "pop": "🔥 Popolare - Pop Star",
+    "master": "👑 Maestro Supremo - Voce del Popolo"
+  },
+  "questions": [
+    {
+      "text": "Cibo odiato?",
+      "options": [
+        "Ananas",
+        "Coratella",
+        "Liquirizia"
+      ],
+      "correct": "Ananas"
+    },
+    {
+      "text": "Giorno peggiore?",
+      "options": [
+        "Lunedì",
+        "Martedì",
+        "Domenica"
+      ],
+      "correct": "Lunedì"
+    },
+    {
+      "text": "Social più odiato?",
+      "options": [
+        "Facebook",
+        "TikTok",
+        "LinkedIn"
+      ],
+      "correct": "LinkedIn"
+    },
+    {
+      "text": "Stagione peggiore?",
+      "options": [
+        "Estate",
+        "Inverno",
+        "Primavera"
+      ],
+      "correct": "Inverno"
+    },
+    {
+      "text": "Genere musicale noioso?",
+      "options": [
+        "Trap",
+        "Jazz",
+        "Classica"
+      ],
+      "correct": "Trap"
+    },
+    {
+      "text": "Modo peggiore per svegliarsi?",
+      "options": [
+        "Allarme",
+        "In ritardo",
+        "Rumore improvviso"
+      ],
+      "correct": "In ritardo"
+    },
+    {
+      "text": "Cosa scordare è peggio?",
+      "options": [
+        "Chiavi",
+        "Telefono",
+        "Portafoglio"
+      ],
+      "correct": "Telefono"
+    },
+    {
+      "text": "Colore meno amato?",
+      "options": [
+        "Giallo",
+        "Marrone",
+        "Fucsia"
+      ],
+      "correct": "Marrone"
+    },
+    {
+      "text": "Sport noioso?",
+      "options": [
+        "Golf",
+        "Curling",
+        "Bowling"
+      ],
+      "correct": "Golf"
+    },
+    {
+      "text": "Pasto meno atteso?",
+      "options": [
+        "Colazione",
+        "Pranzo",
+        "Cena"
+      ],
+      "correct": "Colazione"
+    }
+  ]
+}
