@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Sondaggio al Contrario - Timer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #fdfcfb, #e2d1c3);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      margin-top: 50px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+    }
+    button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .option {
+      background: #f0f0f0;
+      margin: 8px auto;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      max-width: 400px;
+    }
+    #timer {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin: 10px;
+      color: #e53935;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="languageBox">
+    <h2>Scegli la lingua / Choose language</h2>
+    <button onclick="selectLang('it')">🇮🇹 Italiano</button>
+    <button onclick="selectLang('en')">🇬🇧 English</button>
+  </div>
+
+  
+  
+  <div class="container" id="nameBox" style="display:none">
+    <h2>Inserisci il tuo nome</h2>
+    <input id="playerName" placeholder="Es. Luca" style="padding:10px;font-size:1rem;border-radius:8px;">
+    <br><br>
+    <button onclick="submitName()">Continua</button>
+  </div>
+
+  <div class="container" id="avatarBox" style="display:none">
+    <h2>Scegli il tuo avatar</h2>
+    <button onclick="selectAvatar('🐱')">🐱</button>
+    <button onclick="selectAvatar('🐶')">🐶</button>
+    <button onclick="selectAvatar('🦊')">🦊</button>
+    <button onclick="selectAvatar('🐼')">🐼</button>
+  </div>
+
+  <div class="container" id="difficultyBox" style="display:none">
+    <h2>Scegli la difficoltà</h2>
+    <button onclick="selectDifficulty(15)">🟢 Facile</button>
+    <button onclick="selectDifficulty(10)">🟡 Medio</button>
+    <button onclick="selectDifficulty(5)">🔴 Difficile</button>
+  </div>
+
+  <div class="container" id="gameBox" style="display:none">
+    <h1 id="title"></h1>
+    <div id="timer"></div>
+    <p id="question"></p>
+    <div id="options"></div>
+    <p id="result"></p>
+    <p id="scoreBox"></p><div id="rankingBox"></div>
+  </div>
+
+  <script>
+    let lang = "it", data = {}, questions = [];
+
+let avatar='';
+
+let playerName = "";
+function submitName() {
+  const nameInput = document.getElementById("playerName").value.trim();
+  if (!nameInput) return alert("Inserisci un nome valido");
+  playerName = nameInput;
+  document.getElementById("nameBox").style.display = "none";
+  document.getElementById("nameBox").style.display = "block";
+}
+
+function saveToRanking(name, score, emoji) {
+  const entry = { name, score, emoji };
+  let rankings = JSON.parse(localStorage.getItem("ranking") || "[]");
+  rankings.push(entry);
+  rankings = rankings.sort((a,b) => b.score - a.score).slice(0, 5);
+  localStorage.setItem("ranking", JSON.stringify(rankings));
+  return rankings;
+}
+
+function showRanking(entries) {
+  let html = "<h3>🏆 Classifica</h3><ol>";
+  for (const e of entries) {
+    html += `<li>${e.emoji} ${e.name}: ${e.score}/10</li>`;
+  }
+  html += "</ol>";
+  document.getElementById("rankingBox").innerHTML = html;
+}
+
+
+function selectAvatar(emo){
+  avatar = emo;
+  document.getElementById("avatarBox").style.display='none';
+  document.getElementById("difficultyBox").style.display='block';
+}
+
+    let index = 0, score = 0, timeLeft = 0, timerId = null, maxTime = 10;
+
+    async function selectLang(chosen) {
+      lang = chosen;
+      const res = await fetch("i18n/" + lang + ".json");
+      data = await res.json();
+      document.getElementById("languageBox").style.display = "none";
+      document.getElementById("nameBox").style.display = "block";
+    }
+
+    function selectDifficulty(seconds) {
+      maxTime = seconds;
+      questions = data.questions.sort(() => 0.5 - Math.random()).slice(0, 10);
+      document.getElementById("difficultyBox").style.display = "none";
+      document.getElementById("gameBox").style.display = "block";
+      document.getElementById("title").textContent = data.title;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (index >= questions.length) {
+        document.getElementById('question').textContent = avatar + ' ' + data.youScored + ': ' + score + '/10';
+saveToRanking(playerName, score, avatar);
+showRanking(JSON.parse(localStorage.getItem('ranking') || '[]'));
+        document.getElementById("options").innerHTML = "";
+        clearInterval(timerId);
+        return;
+      }
+      const q = questions[index];
+      document.getElementById("question").textContent = q.text;
+      const optBox = document.getElementById("options");
+      optBox.innerHTML = "";
+      q.options.forEach(opt => {
+        const b = document.createElement("div");
+        b.className = "option";
+        b.textContent = opt;
+        b.onclick = () => check(opt, q.correct);
+        optBox.appendChild(b);
+      });
+      startTimer(q.correct);
+    }
+
+    function startTimer(correctAnswer) {
+      timeLeft = maxTime;
+      document.getElementById("timer").textContent = "⏱️ " + timeLeft + " sec";
+      clearInterval(timerId);
+      timerId = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").textContent = "⏱️ " + timeLeft + " sec";
+        if (timeLeft <= 0) {
+          clearInterval(timerId);
+          document.getElementById("result").textContent = data.wrong + " " + correctAnswer;
+          index++;
+          setTimeout(() => {
+            document.getElementById("result").textContent = "";
+            showQuestion();
+          }, 1000);
+        }
+      }, 1000);
+    }
+
+    function check(sel, correct) {
+      clearInterval(timerId);
+      document.getElementById("result").textContent =
+        sel === correct ? data.correct : data.wrong + " " + correct;
+      if (sel === correct) score++;
+      index++;
+      setTimeout(() => {
+        document.getElementById("result").textContent = "";
+        showQuestion();
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
